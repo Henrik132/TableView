@@ -27,8 +27,18 @@ class ViewController: UIViewController {
         
         title = "Games"
 
+        myTableView.tableFooterView = UIView()
+        
+        
+        
     }
-
+        
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        print("Set Editing")
+        
+        super.setEditing(isEditing, animated: true)
+        myTableView.setEditing(!myTableView.isEditing, animated: true)
+    }
     
     
 }
@@ -51,5 +61,30 @@ class ViewController: UIViewController {
     }
 
     extension ViewController: UITableViewDelegate {
-    
+        func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+            return true
+        }
+        func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+            let selectedGame = [sourceIndexPath.row]
+            
+            games.remove(at: sourceIndexPath.row)
+            
+            games.insert(<#T##newElement: String##String#>, at: <#T##Int#>)
+            
+            
+        }
+        
+        func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+            
+            if editingStyle == .delete {
+                games.remove(at: indexPath.row)
+            
+                myTableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            
+            
+            }
+        }
+        
     }
